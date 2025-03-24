@@ -3,10 +3,16 @@ import dlib
 import numpy as np
 from scipy.spatial import distance
 import time
+import winsound
 
 # Load Dlib's face detector and facial landmarks model
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+
+def play_alarm():
+    winsound.Beep(1000, 1000)  # 1000Hz for 1000ms (1 second)
+    time.sleep(0.2)  # Short pause
+    winsound.Beep(1000, 1000)  # Second beep
 
 # Function to compute Eye Aspect Ratio (EAR)
 def eye_aspect_ratio(eye):
@@ -62,6 +68,7 @@ while True:
                 cv2.putText(frame, "ALERT! WAKE UP!", (100, 100),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
                 print("ALARM! Eyes closed for too long!")
+                play_alarm()  # Play alarm sound
         else:
             start_time = None  # Reset timer when eyes are open
 
